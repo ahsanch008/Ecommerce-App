@@ -1,15 +1,17 @@
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 
+
 exports.getCart = async (req, res) => {
   try {
-    let cart = await Cart.findOne({ user: req.user._id }).populate('items.product');
+    let cart = await Cart.findOne({ user: req.user.id }).populate('items.product');
     if (!cart) {
-      cart = new Cart({ user: req.user._id, items: [] });
+      cart = new Cart({ user: req.user.id, items: [] }); // Ensure user ID is set
       await cart.save();
     }
     res.json(cart);
   } catch (error) {
+    console.error('Error fetching cart:', error); // Add logging
     res.status(500).json({ message: 'Error fetching cart', error: error.message });
   }
 };
@@ -17,9 +19,10 @@ exports.getCart = async (req, res) => {
 exports.addToCart = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
-    let cart = await Cart.findOne({ user: req.user._id });
+    let cart = await Cart.findOne({ user: req.user.id });
+    console.log("Cart:", cart);
     if (!cart) {
-      cart = new Cart({ user: req.user._id, items: [] });
+      cart = new Cart({ user: req.user.id, items: [] });
     }
     
     const product = await Product.findById(productId);
@@ -43,9 +46,10 @@ exports.addToCart = async (req, res) => {
     }, 0);
 
     await cart.save();
-    await cart.populate('items.product').execPopulate();
+    await cart.populate('items.product'); // Updated line
     res.json(cart);
   } catch (error) {
+    console.error('Error adding to cart:', error); // Add logging
     res.status(500).json({ message: 'Error adding to cart', error: error.message });
   }
 };
@@ -53,7 +57,7 @@ exports.addToCart = async (req, res) => {
 exports.updateCartItem = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
-    const cart = await Cart.findOne({ user: req.user._id });
+    const cart = await Cart.findOne({ user: req.user.id });
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });
     }
@@ -78,7 +82,7 @@ exports.updateCartItem = async (req, res) => {
     }, 0);
 
     await cart.save();
-    await cart.populate('items.product').execPopulate();
+    await cart.populate('items.product'); // Updated line
     res.json(cart);
   } catch (error) {
     res.status(500).json({ message: 'Error updating cart item', error: error.message });
@@ -88,7 +92,7 @@ exports.updateCartItem = async (req, res) => {
 exports.removeFromCart = async (req, res) => {
   try {
     const { productId } = req.params;
-    const cart = await Cart.findOne({ user: req.user._id });
+    const cart = await Cart.findOne({ user: req.user.id });
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });
     }
@@ -97,7 +101,7 @@ exports.removeFromCart = async (req, res) => {
     cart.total = await recalculateCartTotal(cart);
 
     await cart.save();
-    await cart.populate('items.product').execPopulate();
+    await cart.populate('items.product'); // Updated line
     res.json(cart);
   } catch (error) {
     res.status(500).json({ message: 'Error removing from cart', error: error.message });
@@ -106,7 +110,7 @@ exports.removeFromCart = async (req, res) => {
 
 exports.clearCart = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ user: req.user._id });
+    const cart = await Cart.findOne({ user: req.user.id });
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });
     }

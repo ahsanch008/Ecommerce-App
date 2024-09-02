@@ -2,7 +2,14 @@ const Product = require('../models/Product');
 
 exports.createProduct = async (req, res) => {
   try {
-    const product = new Product(req.body);
+    const productData = req.body;
+    
+    // Parse the images JSON string back into an array
+    if (productData.images) {
+      productData.images = JSON.parse(productData.images);
+    }
+
+    const product = new Product(productData);
     await product.save();
     res.status(201).json(product);
   } catch (error) {

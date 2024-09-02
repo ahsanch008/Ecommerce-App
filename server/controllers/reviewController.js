@@ -4,22 +4,39 @@ const Product = require('../models/Product');
 exports.createReview = async (req, res) => {
   try {
     const { productId, rating, comment } = req.body;
+    
+    // Check if all required fields are present
+    if (!productId || !rating || !comment) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    // Check if the product exists
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
     const review = new Review({
-      user: req.user._id,
+      user: req.user.id,
       product: productId,
       rating,
       comment
     });
+
     await review.save();
 
     // Update product ratings
-    const product = await Product.findById(productId);
-    product.ratings.push({ user: req.user._id, rating });
+    product.ratings.push({ user: req.user.id, rating });
     await product.save();
 
     res.status(201).json(review);
   } catch (error) {
-    res.status(500).json({ message: 'Error creating review', error: error.message });
+    console.error('Error creating review:', error);
+    res.status(500).json({ 
+      message: 'Error creating review', 
+      error: error.message,
+      stack: error.stack
+    });
   }
 };
 
@@ -38,7 +55,7 @@ exports.updateReview = async (req, res) => {
   try {
     const { rating, comment } = req.body;
     const review = await Review.findOneAndUpdate(
-      { _id: req.params.id, user: req.user._id },
+      { _id: req.params.id, user: req.user.id },
       { rating, comment },
       { new: true }
     );
@@ -53,14 +70,14 @@ exports.updateReview = async (req, res) => {
 
 exports.deleteReview = async (req, res) => {
   try {
-    const review = await Review.findOneAndDelete({ _id: req.params.id, user: req.user._id });
+    const review = await Review.findOneAndDelete({ _id: req.params.id, user: req.user.id });
     if (!review) {
       return res.status(404).json({ message: 'Review not found or you are not authorized to delete it' });
     }
 
     // Update product ratings
     const product = await Product.findById(review.product);
-    product.ratings = product.ratings.filter(rating => rating.user.toString() !== req.user._id.toString());
+    product.ratings = product.ratings.filter(rating => rating.user.toString() !== req.user.id.toString());
     await product.save();
 
     res.json({ message: 'Review deleted successfully' });

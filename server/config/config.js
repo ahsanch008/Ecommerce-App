@@ -8,4 +8,8 @@ module.exports = {
     uri: process.env.MONGODB_URI,
   },
   logs: process.env.NODE_ENV === 'production' ? 'combined' : 'dev',
+  googleClientId: process.env.GOOGLE_CLIENT_ID,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  sessionSecret: process.env.SESSION_SECRET,
+  jwtSecret: "Rate-my-professor@@##",
 };

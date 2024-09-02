@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/orderController');
-const auth = require('../middleware/auth');
+const auth = require('../middleware/authorization');
 const roleCheck = require('../middleware/roleCheck');
 
-router.post('/', auth, orderController.createOrder);
-router.get('/', auth, orderController.getOrders);
-router.get('/:id', auth, orderController.getOrderById);
-router.put('/:id/status', auth, roleCheck('admin'), orderController.updateOrderStatus);
-router.put('/:id/cancel', auth, orderController.cancelOrder);
-router.get('/all', auth, roleCheck('admin'), orderController.getAllOrders);
+router.post('/',auth.authenticated, orderController.createOrder);
+router.get('/',auth.authenticated, orderController.getOrders);
+router.get('/:id',auth.authenticated, orderController.getOrderById);
+router.put('/:id/status',auth.authenticated, orderController.updateOrderStatus);
+router.put('/:id/cancel',auth.authenticated, orderController.cancelOrder);
+router.get('/all',auth.authenticated, orderController.getAllOrders);
 
 module.exports = router;
