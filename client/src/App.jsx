@@ -8,7 +8,6 @@ import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import ChangePassword from './pages/ChangePassword';
 import Wishlist from './pages/Wishlist';
 import Checkout from './pages/Checkout';
 import OrderHistory from './pages/OrderHistory';
@@ -20,7 +19,8 @@ import ReviewManagement from './pages/ReviewManagement';
 import AddProduct from './pages/Add';
 import PrivateRoute from './pages/PrivateRoute';
 import { AuthProvider } from './contexts/AuthContext';
-import { CartProvider } from './contexts/CartContext'; // Import CartProvider
+import { CartProvider } from './contexts/CartContext'; 
+import { useScrollToTop } from './contexts/Scroll';
 
 function App() {
   return (
@@ -37,7 +37,6 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-              <Route path="/change-password" element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
               <Route path="/wishlist" element={<PrivateRoute><Wishlist /></PrivateRoute>} />
               <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
               <Route path="/order-history" element={<PrivateRoute><OrderHistory /></PrivateRoute>} />

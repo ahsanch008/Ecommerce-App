@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from '../components/axiosConfig';
 import ProductCard from '../components/ProductCard';
 import Pagination from '../components/Pagination';
@@ -16,6 +16,19 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const categoryParam = params.get('category');
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    } else {
+      setSelectedCategory('');
+    }
+  }, [location.search]);
+
   useEffect(() => {
     fetchProducts();
   }, [currentPage, searchQuery, selectedCategory]);
@@ -23,9 +36,13 @@ const ProductList = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`, {
-        params: { page: currentPage, search: searchQuery, category: selectedCategory }
-      });
+      const params = {
+        page: currentPage,
+        search: searchQuery,
+        category: selectedCategory
+      };
+     
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`, { params });
       setProducts(response.data.products);
       setTotalPages(response.data.totalPages);
       
@@ -55,14 +72,24 @@ const ProductList = () => {
     setCurrentPage(1); // Reset to first page on category change
   };
 
-  if (loading) return <div className="flex justify-center items-center h-screen"><div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-indigo-500"></div></div>;
+  if (loading) return <div className="flex justify-center items-center h-screen"><div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-red-500"></div></div>;
   if (error) return <div className="text-red-500 text-center mt-4">{error}</div>;
 
   return (
-    <div className="bg-gray-100 min-h-screen animate-fade-in">
+    <div className=" min-h-screen animate-fade-in">
+      {/* Hero Section */}
+      <div className="relative h-[70vh] w-full bg-center bg-cover" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1551232864-3f0890e580d9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')` }}>
+        <div className="absolute inset-0 bg-black opacity-35"></div> {/* Optional overlay for better text visibility */}
+        <div className="relative z-10 flex justify-center items-center h-full">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-8 text-center animate-slide-in">
+            Our Products
+          </h2>
+        </div>
+      </div>
+
+      {/* Product List */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h2 className="text-3xl font-extrabold text-gray-900 mb-8 animate-slide-in">Our Products</h2>
-        <div className="mb-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 animate-slide-in">
+        <div className="mb-8 flex flex-col items-center space-y-4 animate-slide-in">
           <SearchBar onSearch={handleSearch} />
           <CategoryFilter 
             categories={categories} 
@@ -70,12 +97,14 @@ const ProductList = () => {
             onCategoryChange={handleCategoryChange} 
           />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-slide-in">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 animate-slide-in">
           {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
+            <div key={product._id} className="flex flex-col h-full">
+              <ProductCard product={product} />
+            </div>
           ))}
         </div>
-        <div className="mt-8 animate-slide-in">
+        <div className="mt-16 text-center text-primary animate-slide-in">
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
       </div>

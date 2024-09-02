@@ -5,7 +5,12 @@ const Product = require('../models/Product');
 exports.createOrder = async (req, res) => {
   try {
     const { shippingAddress, paymentInfo } = req.body;
-    const cart = await Cart.findOne({ user: req.user._id }).populate('items.product');
+    
+    if (!shippingAddress || !paymentInfo) {
+      return res.status(400).json({ message: 'Shipping address and payment information are required' });
+    }
+
+    const cart = await Cart.findOne({ user: req.user.id }).populate('items.product');
     if (!cart || cart.items.length === 0) {
       return res.status(400).json({ message: 'Cart is empty' });
     }
@@ -32,7 +37,7 @@ exports.createOrder = async (req, res) => {
     }
 
     const order = new Order({
-      user: req.user._id,
+      user: req.user.id,
       items: orderItems,
       total,
       shippingAddress,
@@ -48,13 +53,14 @@ exports.createOrder = async (req, res) => {
 
     res.status(201).json(order);
   } catch (error) {
+    console.error('Error creating order:', error);
     res.status(500).json({ message: 'Error creating order', error: error.message });
   }
 };
 
 exports.getOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user._id }).populate('items.product');
+    const orders = await Order.find({ user: req.user.id }).populate('items.product');
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching orders', error: error.message });
@@ -63,7 +69,7 @@ exports.getOrders = async (req, res) => {
 
 exports.getOrderById = async (req, res) => {
   try {
-    const order = await Order.findOne({ _id: req.params.id, user: req.user._id }).populate('items.product');
+    const order = await Order.findOne({ _id: req.params.id, user: req.user.id }).populate('items.product');
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
@@ -92,7 +98,7 @@ exports.updateOrderStatus = async (req, res) => {
 
 exports.cancelOrder = async (req, res) => {
   try {
-    const order = await Order.findOne({ _id: req.params.id, user: req.user._id });
+    const order = await Order.findOne({ _id: req.params.id, user: req.user.id });
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
@@ -124,5 +130,13 @@ exports.getAllOrders = async (req, res) => {
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching all orders', error: error.message });
+  }
+};
+exports.getUserOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user.id }).populate('items.product');
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user orders', error: error.message });
   }
 };

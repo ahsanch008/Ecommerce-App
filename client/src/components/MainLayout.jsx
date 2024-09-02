@@ -4,10 +4,11 @@ import Layout from './Layout';
 function MainLayout({ children }) {
   return (
     <Layout>
-      <div className="min-h-screen bg-white">
-        {children}
-      </div>
-    </Layout>
+    <div className="min-h-screen bg-white">
+      {children}
+    </div>
+  </Layout>
+
   );
 }
 

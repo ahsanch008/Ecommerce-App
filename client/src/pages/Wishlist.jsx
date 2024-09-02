@@ -44,7 +44,7 @@ function Wishlist() {
       {wishlistItems.length === 0 ? (
         <div className="text-center">
           <p className="text-xl text-gray-600 mb-4">Your wishlist is empty.</p>
-          <Link to="/products" className="inline-block bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition duration-300">
+          <Link to="/products" className="inline-block btn">
             Browse Products
           </Link>
         </div>
