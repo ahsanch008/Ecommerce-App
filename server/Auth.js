@@ -60,14 +60,11 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-// Routes
 app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    console.log('User authenticated:', req.user);
-    // Generate a JWT token
     const token = jwt.sign(
       {
         id: req.user.id,
@@ -78,7 +75,6 @@ app.get('/google/callback',
       { expiresIn: '1h' }
     );
 
-    // Set the JWT token as a cookie
     res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
 
     // Redirect to the client application
@@ -93,7 +89,6 @@ app.get('/logout', (req, res, next) => {
     res.clearCookie('connect.sid', { path: '/', httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict' }); // Clear session cookie
     res.clearCookie('token', { path: '/', httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict' }); // Clear JWT token cookie
 
-    //  res.redirect('http://localhost:5173'); // Redirect to frontend
   });
 });
 
@@ -111,7 +106,6 @@ app.get('/profile', (req, res) => {
   }
 });
 
-// Error Handling
 app.use((err, req, res, next) => {
   console.error('Error during OAuth flow:', err);
   res.status(500).send('Internal Server Error');

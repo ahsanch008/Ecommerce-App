@@ -116,7 +116,6 @@ exports.createUser = async (req, res) => {
   }
 };
 
-// Login a user
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -141,7 +140,6 @@ exports.loginUser = async (req, res) => {
     const token = jwt.sign(payload, "your_jwt_secret_key", {
       expiresIn: "1h",
     });
-      // Set the JWT token as a cookie
     res.cookie('token', token, { httpOnly: true, secure: false }); // Set secure to true if using HTTPS
 
 

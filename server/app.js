@@ -11,7 +11,7 @@ const session = require('express-session');
 const auth_router= require('./Auth')
 const cookieparser= require('cookie-parser')
 
-// Import routes
+
 const userRoutes = require('./routes/users');
 const productRoutes = require('./routes/products');
 const cartRoutes = require('./routes/cart');
@@ -24,7 +24,7 @@ app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true
 }));
-// Middleware
+
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
@@ -40,10 +40,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Connect to MongoDB
 connectDB();
 
-// Routes
+
 app.use("/auth", auth_router);
 app.use('/users', userRoutes);
 app.use('/products', productRoutes);
@@ -52,12 +51,10 @@ app.use('/orders', orderRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/admin', adminRoutes);
 
-// Root route
 app.get("*", (req, res) => {
   res.status(404).json({ msg: "The requested url was not found" });
 });
 
-// Error handling middleware
 app.use(errorHandler);
 
 module.exports = app;

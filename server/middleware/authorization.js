@@ -9,7 +9,7 @@ const authenticated = (req, res, next) => {
     try {
         const decodedToken = jwt.verify(token, "your_jwt_secret_key");
         req.user = { 
-            id: decodedToken.id, // Ensure the user ID is set
+            id: decodedToken.id, 
             name: decodedToken.name, 
             role: decodedToken.role 
         };
@@ -23,7 +23,6 @@ const authenticated = (req, res, next) => {
     }
 };
 
-// Middleware to check if the user has one of the allowed roles
 const authorization = (...roles) => {
     return (req, res, next) => {
         const  role  = req.user.role;

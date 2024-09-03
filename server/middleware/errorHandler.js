@@ -2,7 +2,7 @@ module.exports = (err, req, res, next) => {
   console.error(err.stack);
 
   if (res.headersSent) {
-    return next(err); // If headers are already sent, delegate to the default Express error handler
+    return next(err); 
   }
 
   const statusCode = err.statusCode || 500;

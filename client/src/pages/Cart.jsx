@@ -10,7 +10,7 @@ function Cart() {
   };
 
   const total = cart.items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
-  const tax = total * 0.21; // Assuming 21% tax rate
+  const tax = total * 0.17; // Assuming 17% tax rate
 
   return (
     <div className="bg-white min-h-screen">

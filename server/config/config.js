@@ -11,5 +11,5 @@ module.exports = {
   googleClientId: process.env.GOOGLE_CLIENT_ID,
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
   sessionSecret: process.env.SESSION_SECRET,
-  jwtSecret: "Rate-my-professor@@##",
+  jwtSecret: process.env.JWT_SECRET,
 };

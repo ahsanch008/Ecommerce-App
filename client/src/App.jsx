@@ -26,7 +26,7 @@ import AdminDashboard from './pages/AdminDashboard';
 function App() {
   return (
     <AuthProvider>
-      <CartProvider> {/* Wrap the application with CartProvider */}
+      <CartProvider> 
         <Router>
           <MainLayout>
             <Routes>

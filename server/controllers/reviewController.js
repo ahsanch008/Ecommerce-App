@@ -5,12 +5,10 @@ exports.createReview = async (req, res) => {
   try {
     const { productId, rating, comment } = req.body;
     
-    // Check if all required fields are present
     if (!productId || !rating || !comment) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
-    // Check if the product exists
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
@@ -25,7 +23,6 @@ exports.createReview = async (req, res) => {
 
     await review.save();
 
-    // Update product ratings
     product.ratings.push({ user: req.user.id, rating });
     await product.save();
 
@@ -74,8 +71,7 @@ exports.deleteReview = async (req, res) => {
     if (!review) {
       return res.status(404).json({ message: 'Review not found or you are not authorized to delete it' });
     }
-
-    // Update product ratings
+  
     const product = await Product.findById(review.product);
     product.ratings = product.ratings.filter(rating => rating.user.toString() !== req.user.id.toString());
     await product.save();
