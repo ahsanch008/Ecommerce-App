@@ -68,7 +68,7 @@ function Profile() {
                 <div className="p-4">
                   <h3 className="text-md font-semibold mb-2">Order #{order._id}</h3>
                   <p className="text-gray-600 mb-2">Status: {order.status}</p>
-                  <p className="text-gray-600 mb-4">Total: ${order.total.toFixed(2)}</p>
+                  <p className="text-gray-600 mb-4">Total: Rs {order.total.toFixed(2)}</p>
                   <div className="mb-4">
                     <h4 className="font-semibold mb-2">Items:</h4>
                     {order.items.map((item, index) => (

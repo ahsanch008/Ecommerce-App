@@ -30,7 +30,7 @@ function Cart() {
               <img src={item.product.images[0]} alt={item.product.name} className="w-24 h-32 object-cover mr-6" />
               <div>
                 <h2 className="text-xl font-semibold">{item.product.name}</h2>
-                <p className="text-lg font-bold mt-2">£{item.product.price.toFixed(2)}</p>
+                <p className="text-lg font-bold mt-2">Rs {item.product.price.toFixed(2)}</p>
                 <div className="mt-2">
                   <span className="mr-2">SIZE:</span>
                   {['S', 'M', 'L', 'XL'].map(size => (
@@ -52,9 +52,9 @@ function Cart() {
         <div className="mt-8">
           <h3 className="text-xl font-bold mb-4">Totals <button onClick={() => cart.items.forEach(item => removeFromCart(item.product._id))} className="text-sm font-normal text-gray-500 ml-2">Clear cart</button></h3>
           <div className="border p-4">
-            <p>Tax 17%: £{tax.toFixed(2)}</p>
+            <p>Tax 17%: Rs {tax.toFixed(2)}</p>
             <p>Quantity: {cart.items.reduce((sum, item) => sum + item.quantity, 0)}</p>
-            <p className="font-bold">Total: £{total.toFixed(2)}</p>
+            <p className="font-bold">Total: Rs {total.toFixed(2)}</p>
           </div>
         </div>
         

@@ -125,13 +125,22 @@ exports.cancelOrder = async (req, res) => {
 };
 
 exports.getAllOrders = async (req, res) => {
+  console.log('getAllOrders function called');
   try {
+    console.log('Attempting to fetch all orders...');
     const orders = await Order.find().populate('user', 'name email').populate('items.product');
+    console.log(`Successfully found ${orders.length} orders`);
     res.json(orders);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching all orders', error: error.message });
+    console.error('Error in getAllOrders:', error);
+    res.status(500).json({ 
+      message: 'Error fetching all orders', 
+      error: error.message,
+      stack: error.stack
+    });
   }
 };
+
 exports.getUserOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id }).populate('items.product');

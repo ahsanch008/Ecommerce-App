@@ -20,7 +20,8 @@ import AddProduct from './pages/Add';
 import PrivateRoute from './pages/PrivateRoute';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext'; 
-import { useScrollToTop } from './contexts/Scroll';
+import AdminRoute from './components/AdminROute';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -41,10 +42,11 @@ function App() {
               <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
               <Route path="/order-history" element={<PrivateRoute><OrderHistory /></PrivateRoute>} />
               <Route path="/orders/:id" element={<PrivateRoute><OrderDetails /></PrivateRoute>} />
-              <Route path="/admin/products" element={<PrivateRoute><AdminProductManagement /></PrivateRoute>} />
-              <Route path="/admin/users" element={<PrivateRoute><UserManagement /></PrivateRoute>} />
-              <Route path="/admin/orders" element={<PrivateRoute><OrderManagement /></PrivateRoute>} />
-              <Route path="/admin/reviews" element={<PrivateRoute><ReviewManagement /></PrivateRoute>} />
+              <Route path="/admin/products" element={<AdminRoute><AdminProductManagement /></AdminRoute>} />
+              <Route path="/admin/users" element={<AdminRoute><UserManagement /></AdminRoute>} />
+              <Route path="/admin/orders" element={<AdminRoute><OrderManagement /></AdminRoute>} />
+              <Route path="/admin/reviews" element={<AdminRoute><ReviewManagement /></AdminRoute>} />
+              <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
             </Routes>
           </MainLayout>
         </Router>

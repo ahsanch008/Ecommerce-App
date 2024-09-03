@@ -17,6 +17,7 @@ const productRoutes = require('./routes/products');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/orders');
 const reviewRoutes = require('./routes/reviews');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 app.use(cors({
@@ -49,6 +50,7 @@ app.use('/products', productRoutes);
 app.use('/cart', cartRoutes);
 app.use('/orders', orderRoutes);
 app.use('/reviews', reviewRoutes);
+app.use('/admin', adminRoutes);
 
 // Root route
 app.get("*", (req, res) => {

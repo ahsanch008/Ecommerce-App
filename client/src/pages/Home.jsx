@@ -84,7 +84,7 @@ function Home() {
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                     <h3 className="text-lg font-semibold text-white">{product.name}</h3>
-                    <p className="mt-1 text-sm text-white">${product.price.toFixed(2)}</p>
+                    <p className="mt-1 text-sm text-white">Rs {product.price.toFixed(2)}</p>
                   </div>
                 </div>
               </Link>

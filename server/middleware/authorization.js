@@ -16,6 +16,7 @@ const authenticated = (req, res, next) => {
         if (!req.user || !req.user.role) {
             return res.status(401).json({ msg: "Unauthorized access / role not defined" });
         }
+        
         next();
     } catch (error) {
         return res.status(401).json({ msg: "Invalid token" });

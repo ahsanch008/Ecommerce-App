@@ -10,6 +10,6 @@ router.get('/user',auth.authenticated, orderController.getUserOrders);
 router.get('/:id',auth.authenticated, orderController.getOrderById);
 router.put('/:id/status',auth.authenticated, orderController.updateOrderStatus);
 router.put('/:id/cancel',auth.authenticated, orderController.cancelOrder);
-router.get('/all',auth.authenticated, orderController.getAllOrders);
+router.get('/all/get',auth.authenticated, orderController.getAllOrders);
 
 module.exports = router;

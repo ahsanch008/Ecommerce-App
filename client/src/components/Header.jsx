@@ -43,7 +43,7 @@ function Header() {
                 <button onClick={handleLogout} className="bg-gradient-to-r from-primary-gradient-start to-primary-gradient-end text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity duration-200">Logout</button>
               </>
             ) : (
-              <Link to="/login" className="bg-gradient-to-r from-primary-gradient-start to-primary-gradient-end text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity duration-200">Login</Link>
+              <Link to="/login" className="bg-gradient-to-r from-primary-gradient-start to-primary-gradient-end text-white px-4 py-2  hover:opacity-90 transition-opacity duration-200">Login</Link>
             )}
           </div>
           <div className="md:hidden flex items-center">
@@ -79,7 +79,7 @@ function Header() {
                 <button onClick={handleLogout} className="w-full text-left text-text hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Logout</button>
               </>
             ) : (
-              <Link to="/login" className="text-text hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Login</Link>
+              <Link to="/login" className="text-text hover:text-primary block px-3 py-2  text-base font-medium">Login</Link>
             )}
           </div>
         </div>
