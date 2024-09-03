@@ -8,7 +8,10 @@ import { useCart } from '../contexts/CartContext';
 import { ShoppingCartIcon } from '@heroicons/react/outline';
 import ProductCard from '../components/ProductCard';
 import { Scrollbars } from 'react-custom-scrollbars-2';
-
+import { useWishlist } from '../contexts/Wishlist';
+import { HeartIcon as HeartOutline } from '@heroicons/react/outline';
+import { HeartIcon as HeartSolid } from '@heroicons/react/solid';
+import { ShoppingBagIcon } from '@heroicons/react/outline';
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -17,6 +20,8 @@ function ProductDetails() {
   const { addToCart } = useCart();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [similarProducts, setSimilarProducts] = useState([]);
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const isInWishlist = wishlist.some(item => item._id === product?._id);
 
   useEffect(() => {
     fetchProduct();
@@ -66,6 +71,14 @@ function ProductDetails() {
     setIsReviewFormOpen(false);
   };
 
+  const handleWishlistToggle = () => {
+    if (isInWishlist) {
+      removeFromWishlist(product._id);
+    } else {
+      addToWishlist(product._id);
+    }
+  };
+
   if (!product) return (
     <div className="flex justify-center items-center h-screen">
       <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-indigo-500"></div>
@@ -77,21 +90,33 @@ function ProductDetails() {
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-x-8">
           {/* Product Image */}
-          <div className="lg:max-w-lg lg:self-end relative">
-            <div className="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden shadow-lg">
+          <div className="lg:max-w-lg lg:self-start relative">
+            <div className="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
               <img src={product.images[currentImageIndex]} alt={product.name} className="w-full h-full object-center object-cover" />
             </div>
-            <button onClick={handlePrevImage} className="absolute left-0 top-1/2 transform -translate-y-1/2 opacity-75 bg-primary text-white p-2 rounded-full hover:bg-gray-700 transition duration-300">
-              &lt;
+            <button onClick={handlePrevImage} className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 text-gray-800 p-2 rounded-full hover:bg-opacity-75 transition duration-300">
+              ←
             </button>
-            <button onClick={handleNextImage} className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-primary opacity-75 text-white p-2 rounded-full hover:bg-gray-700 transition duration-300">
-              &gt;
+            <button onClick={handleNextImage} className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 text-gray-800 p-2 rounded-full hover:bg-opacity-75 transition duration-300">
+              →
             </button>
           </div>
 
           {/* Product details */}
           <div className="mt-10 lg:mt-0 lg:row-span-2 lg:self-center">
-            <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.name}</h1>
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.name}</h1>
+              <button
+                onClick={handleWishlistToggle}
+                className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300"
+              >
+                {isInWishlist ? (
+                  <HeartSolid className="h-8 w-8 text-red-500" />
+                ) : (
+                  <HeartOutline className="h-8 w-8 text-gray-400 hover:text-red-500" />
+                )}
+              </button>
+            </div>
             <div className="mt-3">
               <p className="text-3xl text-gray-900">Rs {product.price.toFixed(2)}</p>
             </div>
@@ -100,19 +125,19 @@ function ProductDetails() {
               <p className="text-sm text-black whitespace-pre-line justify-center">{product.description}</p>
             </div>
             <div className="mt-10">
-              <button
+            <button
                 onClick={handleAddToCart}
-                className="w-1/3 flex items-center justify-center bg-gradient-to-r from-red-500 to-red-600 hover:bg-red-600 text-white px-6 py-3 text-lg font-semibold transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                className="w-1/3 flex items-center justify-center bg-gray-900 text-white px-6 py-3 text-sm font-medium transition duration-300 ease-in-out hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
               >
-                <ShoppingCartIcon className="h-6 w-6 text-white mr-2" />
+                <ShoppingBagIcon className="h-5 w-5 mr-2" />
                 Add to Cart
               </button>
             </div>
             {user && (
-              <div className="mt-10">
+              <div className="mt-4">
                 <button
                   onClick={handleOpenReviewForm}
-                  className="w-1/3 bg-gradient-to-r from-red-400 to-red-500 text-white font-bold py-3 px-4 shadow-md hover:opacity-90 transition-opacity duration-300"
+                  className="w-1/3 bg-gray-900 text-white font-bold py-3 px-4 shadow-md hover:opacity-90 transition-opacity duration-300"
                 >
                   Write a Review
                 </button>

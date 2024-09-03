@@ -41,7 +41,7 @@ function Home() {
       <HeroSection />
       <FeaturedCategories />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 className="text-3xl text-primary font-extrabold text-gray-900 mb-8 text-center animate-slide-in">Featured Products</h2>
+        <h2 className="text-3xl text-gray-950 font-extrabold text-gray-900 mb-8 text-center animate-slide-in">Featured Products</h2>
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-indigo-500"></div>
@@ -69,7 +69,7 @@ function Home() {
       {/* New Arrivals Section */}
       <div className=" py-16 mb-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl text-primary font-extrabold text-gray-900 mb-8 text-center animate-slide-in">New Arrivals</h2>
+          <h2 className="text-3xl text-gray-950 font-extrabold text-gray-900 mb-8 text-center animate-slide-in">New Arrivals</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-slide-in">
             {newArrivals.map((product) => (
               <Link key={product._id} to={`/products/${product._id}`} className="block group">

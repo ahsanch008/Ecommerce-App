@@ -10,12 +10,12 @@ const HeroSection = () => {
           src="https://images.unsplash.com/photo-1665815844395-06f64f44b5e3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Hero background"
         />
-        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="absolute inset-0 bg-black opacity-40"></div>
       </div>
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl tracking-tight font-extrabold sm:text-4xl md:text-5xl">
           <span className="block xl:inline">Welcome to </span>{' '}
-          <span className="block text-primary xl:inline">URBANStore</span>
+          <span className="block text-gray-950 xl:inline">URBANStore</span>
         </h1>
         <p className="mt-3 text-base sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl">
           Discover the latest trends in fashion and accessories. Shop our curated collection of stylish clothing and accessories for every occasion.
@@ -24,7 +24,7 @@ const HeroSection = () => {
           <div className="rounded-md shadow">
             <Link
               to="/products"
-              className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-primary-gradient-start to-primary-gradient-end hover:opacity-90 md:py-4 md:text-lg md:px-10 transition-colors duration-200"
+              className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-sm text-white bg-gradient-to-r from-primary-gradient-start to-primary-gradient-end hover:opacity-90 md:py-4 md:text-lg md:px-10 transition-colors duration-200"
             >
               Shop Now
             </Link>

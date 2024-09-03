@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { useWishlist } from '../contexts/Wishlist';
 
 function Cart() {
-  const { cart, updateCartItem, removeFromCart } = useCart();
+  const { cart, updateCartItem, removeFromCart, addToCart } = useCart();
+  const { wishlist } = useWishlist();
 
   const handleQuantityChange = (productId, newQuantity) => {
     updateCartItem(productId, newQuantity);
@@ -65,6 +67,42 @@ function Cart() {
           <Link to="/checkout" className="px-6 py-2 bg-red-500 text-white font-semibold">
             Checkout
           </Link>
+        </div>
+        
+        {/* Wishlist Section */}
+        <div className="mt-16 p-6">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800">Wishlist</h2>
+          {wishlist.length === 0 ? (
+            <p className="text-gray-600 text-center">Your wishlist is empty.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {wishlist.map(product => (
+                <Link
+                  to={`/products/${product._id}`}
+                  key={product._id}
+                  className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 cursor-pointer"
+                >
+                  <img src={product.images[0]} alt={product.name} className="w-full h-96 object-cover" />
+                  <div className="p-2">
+                    <h3 className="font-semibold text-md mb-2 text-gray-800">{product.name}</h3>
+                    <p className="text-black font-semibold mb-3 text-sm">Rs {product.price.toFixed(2)}</p>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        addToCart(product._id, 1);
+                      }}
+                      className="w-full bg-gradient-to-r from-red-400 to-red-500 text-white px-4 py-2  hover:bg-red-600 transition-colors duration-300 flex items-center justify-center"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                      </svg>
+                      Add to Cart
+                    </button>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

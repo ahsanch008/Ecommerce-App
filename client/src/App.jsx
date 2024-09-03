@@ -22,11 +22,13 @@ import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext'; 
 import AdminRoute from './components/AdminROute';
 import AdminDashboard from './pages/AdminDashboard';
+import { WishlistProvider } from './contexts/Wishlist';
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider> 
+      <WishlistProvider>
         <Router>
           <MainLayout>
             <Routes>
@@ -50,6 +52,7 @@ function App() {
             </Routes>
           </MainLayout>
         </Router>
+        </WishlistProvider>
       </CartProvider>
     </AuthProvider>
   );

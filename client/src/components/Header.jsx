@@ -21,7 +21,7 @@ function Header() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
-              <span className="text-2xl font-bold text-primary">URBANStore</span>
+              <span className="text-2xl font-bold text-gray-900">URBANStore</span>
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-4">
@@ -40,7 +40,7 @@ function Header() {
             {user ? (
               <>
                 <Link to="/profile" className="text-text hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Profile</Link>
-                <button onClick={handleLogout} className="bg-gradient-to-r from-primary-gradient-start to-primary-gradient-end text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity duration-200">Logout</button>
+                <button onClick={handleLogout} className="bg-gradient-to-r from-gray-900 to-gray-950 text-white px-4 py-2 rounded-sm hover:opacity-90 transition-opacity duration-200">Logout</button>
               </>
             ) : (
               <Link to="/login" className="bg-gradient-to-r from-primary-gradient-start to-primary-gradient-end text-white px-4 py-2  hover:opacity-90 transition-opacity duration-200">Login</Link>
