@@ -20,7 +20,7 @@ import AddProduct from './pages/Add';
 import PrivateRoute from './pages/PrivateRoute';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext'; 
-import AdminRoute from './components/AdminROute';
+import AdminRoute from './components/AdminRoute';
 import AdminDashboard from './pages/AdminDashboard';
 import { WishlistProvider } from './contexts/Wishlist';
 
