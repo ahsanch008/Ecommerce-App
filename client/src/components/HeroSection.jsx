@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
-    <div className="relative bg-background overflow-hidden h-screen w-full">
+    <div className="relative bg-background overflow-hidden h-screen w-full -mt-5">
       <div className="absolute inset-0">
         <img
           className="w-full h-full object-cover"

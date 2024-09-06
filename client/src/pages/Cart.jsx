@@ -25,14 +25,14 @@ function Cart() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h1 className="text-3xl font-bold mb-8">CART</h1>
+        <h1 className="text-3xl font-bold mb-8 text-gray-950">CART</h1>
         {cart.items.map(item => (
           <div key={item.product._id} className="flex items-center border-b border-gray-200 py-4">
             <div className="w-2/3 flex items-center">
               <img src={item.product.images[0]} alt={item.product.name} className="w-24 h-32 object-cover mr-6" />
               <div>
-                <h2 className="text-xl font-semibold">{item.product.name}</h2>
-                <p className="text-lg font-bold mt-2">Rs {item.product.price.toFixed(2)}</p>
+                <h2 className="text-ld font-semibold">{item.product.name}</h2>
+                <p className="text-md font-bold mt-2">Rs {item.product.price.toFixed(2)}</p>
                 <div className="mt-2">
                   <span className="mr-2">SIZE:</span>
                   {['S', 'M', 'L', 'XL'].map(size => (
