@@ -2,6 +2,7 @@
 
 ## Description
 URBANStore is a full-stack e-commerce platform for urban fashion. It provides a seamless shopping experience with features like user authentication, product browsing, cart management, order processing, and an admin dashboard for managing products, orders, and users.
+
 ## Features and Functionality
 
 ### User Authentication and Authorization
@@ -86,7 +87,6 @@ URBANStore is a full-stack e-commerce platform for urban fashion. It provides a 
 - Environment-based configuration for development and production setups
 - Error logging and monitoring capabilities
 
-
 ## Project Structure
 The project is divided into two main parts:
 - `client/`: Frontend application built with React and Vite
@@ -114,9 +114,11 @@ The project is divided into two main parts:
 - Passport.js for Google OAuth
 
 ## Prerequisites
-- Node.js (v14 or later)
-- MongoDB
-- npm or yarn
+- Docker
+- Docker Compose
+- Node.js (v14 or later) (if running without Docker)
+- MongoDB (if running without Docker)
+- npm or yarn (if running without Docker)
 
 ## Installation
 
@@ -126,13 +128,7 @@ The project is divided into two main parts:
    cd urbanstore
    ```
 
-2. Install dependencies for both frontend and backend:
-   ```bash
-   cd client && npm install
-   cd ../server && npm install
-   ```
-
-3. Set up environment variables:
+2. Set up environment variables:
    - For the frontend, create a `.env` file in the `client/` directory:
      ```
      VITE_API_URL=http://localhost:3000
@@ -148,7 +144,18 @@ The project is divided into two main parts:
      SESSION_SECRET=your_session_secret
      ```
 
-## Running the Application
+## Running the Application with Docker
+
+1. Ensure Docker and Docker Compose are installed on your machine.
+
+2. Navigate to the project root directory and run:
+   ```bash
+   docker-compose up --build
+   ```
+
+3. Open your browser and navigate to `http://localhost:5173` to view the application.
+
+## Running the Application without Docker
 
 1. Start the backend server:
    ```bash
@@ -163,7 +170,6 @@ The project is divided into two main parts:
    ```
 
 3. Open your browser and navigate to `http://localhost:5173` to view the application.
-
 
 ## API Endpoints
 
@@ -200,5 +206,3 @@ The project is divided into two main parts:
 - `GET /reviews/product/:productId`: Get reviews for a product
 - `PUT /reviews/:id`: Update a review
 - `DELETE /reviews/:id`: Delete a review
-
-
