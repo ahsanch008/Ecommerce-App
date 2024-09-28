@@ -35,7 +35,7 @@ function AddProduct() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/products', formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/products`, formData, {
         headers: { 'Content-Type': 'application/json' }
       });
       console.log('Product added:', response.data);

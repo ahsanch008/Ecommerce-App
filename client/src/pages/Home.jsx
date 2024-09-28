@@ -18,7 +18,7 @@ function Home() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/products?limit=8');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/products?limit=8`);
       setProducts(response.data.products);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -29,7 +29,7 @@ function Home() {
 
   const fetchNewArrivals = async () => {
     try {
-      const response = await axios.get('/products?limit=3&sort=createdAt');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/products?limit=3&sort=createdAt`);
       setNewArrivals(response.data.products);
     } catch (error) {
       console.error('Error fetching new arrivals:', error);

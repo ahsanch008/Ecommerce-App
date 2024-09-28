@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./server
+    container_name: ecommerce-backend
+    ports:
+      - '3000:3000'
+    environment:
+      - mongoURI=${mongoURI}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION_INTERVAL=${JWT_EXPIRATION_INTERVAL}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - NODE_ENV=${NODE_ENV}
+    volumes:
+      - ./server:/app  # Mount the backend code to avoid rebuilding
+      - /app/node_modules  # Prevent overwriting node_modules
+    networks:
+      - ecommerce-network
+
+  frontend:
+    build:
+      context: ./client
+    container_name: ecommerce-frontend
+    ports:
+      - '5173:5173'
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+    depends_on:
+      - backend
+    volumes:
+      - ./client:/app  # Mount the frontend code for development
+      - /app/node_modules  # Prevent overwriting node_modules
+    networks:
+      - ecommerce-network
+
+networks:
+    ecommerce-network:
+      driver: bridge
